@@ -23,10 +23,25 @@ df_indicators=df_indicators.set_index('id')
 ### Export the information to an excel ###
 df_indicators.to_excel('Indicators.xlsx')
 
+### Ask the user if they want to search for an indicator by a keyword in its name ###
+search = input("Do you want to search for an indicator by a keyword in its name? (y/n): ")
+if search.lower() == 'y':
+    keyword = input("Enter the keyword to search in indicator names: ")
+    matches = df_indicators[df_indicators['name'].str.contains(keyword, case=False, na=False)]
+    if not matches.empty:
+        print("Matching indicators:")
+        print(matches[['name']])
+    else:
+        print("No indicators found with that keyword.")
+
+
 ### Add the necessary parameters for indicator search ##
-indicator=input("introduce el id del indicador que quieres consultar y pulsa ENTER: ")
-start_date=input("introduce la fecha inicial en formato YYYY-MM-DDT00:00:00Z y pulsa ENTER: ")
-end_date=input("introduce la fecha final en formato YYYY-MM-DDT00:00:00Z y pulsa ENTER: ")
+indicator=input("Insert the id of the indicator you want to consult and press ENTER: ")
+start_date=input("Insert the start date with format YYYY-MM-DDT00:00:00Z and press ENTER: ")
+end_date=input("Insert the end date with format YYYY-MM-DDT00:00:00Z and press ENTER: ")
+
+### Show the name of the indicator to the ussers ###
+print("Vas a consultar el indicador: ",df_indicators.loc[int(indicator),'name'])
 
 ### Form the complete URL ###
 cURLwithIndicator=cURL+"/"+indicator+"?start_date="+start_date+"&end_date="+end_date
