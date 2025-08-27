@@ -29,8 +29,12 @@ if search.lower() == 'y':
     keyword = input("Enter the keyword to search in indicator names: ")
     matches = df_indicators[df_indicators['name'].str.contains(keyword, case=False, na=False)]
     if not matches.empty:
-        print("Matching indicators:")
-        print(matches[['name']])
+        input("Do you want to export the list in an Excel file? (y/n):")
+        if search.lower() == 'y':
+            matches.to_excel('Matching_Indicators.xlsx')
+        else:
+            print("Matching indicators:")
+            print(matches[['name']])
     else:
         print("No indicators found with that keyword.")
 
