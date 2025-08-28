@@ -29,7 +29,7 @@ if search.lower() == 'y':
     keyword = input("Enter the keyword to search in indicator names: ")
     matches = df_indicators[df_indicators['name'].str.contains(keyword, case=False, na=False)]
     if not matches.empty:
-        input("Do you want to export the list in an Excel file? (y/n):")
+        search = input("Do you want to export the list in an Excel file? (y/n):")
         if search.lower() == 'y':
             matches.to_excel('Matching_Indicators.xlsx')
         else:
@@ -48,7 +48,7 @@ end_date=input("Insert the end date with format YYYY-MM-DDT00:00:00Z and press E
 print("Vas a consultar el indicador: ",df_indicators.loc[int(indicator),'name'])
 
 ### Form the complete URL ###
-cURLwithIndicator=cURL+"/"+indicator+"?start_date="+start_date+"&end_date="+end_date
+cURLwithIndicator=cURL+"/"+indicator+"?start_date="+start_date+"&end_date="+end_date+"&time_agg=avg&time_trunc=hour"
 
 ### Obtain the response and export to Excel ###
 response=requests.get(cURLwithIndicator,headers=headers)
